@@ -1,0 +1,7 @@
+target/
+*.jar
+*.war
+*.zip
+.git/
+.gitignore
+README.md

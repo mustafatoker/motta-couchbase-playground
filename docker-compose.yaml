@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  couchbase:
+    build:
+      context: ./.docker/couchbase
+      dockerfile: Dockerfile
+    container_name: couchbase
+    ports:
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
+      - "8094:8094"
+      - "11210:11210"
+    environment:
+      COUCHBASE_ADMINISTRATOR_USERNAME: admin
+      COUCHBASE_ADMINISTRATOR_PASSWORD: password
+      COUCHBASE_CONNECTION_STRING: couchbase://couchbase
+      COUCHBASE_USERNAME: Administrator
+      COUCHBASE_PASSWORD: password
+      COUCHBASE_BUCKET_NAME: default
+    healthcheck:
+      test: [ "CMD", "curl", "-u", "admin:password", "-f", "http://127.0.0.1:8091/pools" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - motta-network
+    volumes:
+      - couchbase_data:/opt/couchbase/var
+
+  spring-boot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-boot-app
+    depends_on:
+      couchbase:
+        condition: service_healthy
+    restart: always
+    networks:
+      - motta-network
+    ports:
+      - "8080:8080"
+
+networks:
+  motta-network:
+    driver: bridge
+
+volumes:
+  couchbase_data:
+    driver: local

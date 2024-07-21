@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: motta
+  couchbase:
+    connection-string: ${COUCHBASE_CONNECTION_STRING:couchbase://couchbase}
+    username: ${COUCHBASE_USERNAME:admin}
+    password: ${COUCHBASE_PASSWORD:password}
+  data:
+    couchbase:
+      bucket-name: ${COUCHBASE_BUCKET_NAME:motta_app}
+      repositories:
+        type: auto
+      auto-index: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+jwt:
+  secret: ELp3u1Czy50E9e5dVNjCacLVdL3cZJCx5fBlgnY2GmE
+  expiration: 86400000
