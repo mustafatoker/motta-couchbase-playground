@@ -61,9 +61,17 @@ Swagger UI can be accessed (if configured) at:
 http://localhost:8080/api/swagger-ui.html
 ```
 
-Troubleshooting
+### Troubleshooting
 
 - Use docker-compose logs to view logs and troubleshoot any issues during startup.
 - Ensure Couchbase and the Spring Boot application are properly configured and running on the same Docker network.
 - Ensure the application is running on port 8080 and Couchbase is running on port 8091.
+
+### TODO
+- Add unit tests
+- Add integration tests
+- Integrate with CI/CD pipeline
+- Add more features to the application
+- Add monitoring and logging
+- Convert the application to spring boot reactive
 
